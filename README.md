@@ -46,3 +46,66 @@ Tax Saver Agent is an AI-powered system designed to analyze users' income, expen
 ## License
 This project is licensed under the MIT License.
 
+# Tax Saver LangChain
+
+This project is a Tax-Saving AI Assistant built using LangChain, designed to help Indian taxpayers generate comprehensive tax-saving reports based on their financial data.
+
+## Project Structure
+
+```
+tax-saver-langchain
+├── app
+│   ├── __init__.py
+│   ├── main.py
+│   ├── utils
+│   │   ├── __init__.py
+│   │   └── agent.py
+│   └── prompts
+│       └── tax_report_prompt.txt
+├── requirements.txt
+└── README.md
+```
+
+## Installation
+
+To set up the project, follow these steps:
+
+1. Clone the repository:
+   ```
+   git clone <repository-url>
+   cd tax-saver-langchain
+   ```
+
+2. Install the required dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+
+## Usage
+
+1. Navigate to the `app` directory:
+   ```
+   cd app
+   ```
+
+2. Run the application:
+   ```
+   python main.py
+   ```
+
+3. Follow the prompts to input your financial data and receive a tax-saving report.
+
+## Features
+
+- **Detailed Tax Calculation**: Calculates gross total income, deductions, net taxable income, and tax payable under both old and new regimes.
+- **Savings Suggestions**: Provides recommendations on how to maximize tax-saving investments.
+- **Exemption Suggestions**: Offers insights on exemptions like HRA and home loan deductions.
+- **Optional Alerts**: Notifies users of under-utilized deductions and potential overlaps in claims.
+
+## Contributing
+
+Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.

@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaxSaver Pro - Advanced Tax Planning Interface</title>
+    <style>
+        :root {
+            --primary: #1a1d29;
+            --primary-light: #2a2f3f;
+            --accent: #055cc7;
+            --accent-light: #111c7d;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --text-light: #9ca3af;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #9fc2d0 0%, #75acff 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            background: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .brand-text {
+            color: rgb(5, 5, 5);
+        }
+
+        .brand-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .brand-subtitle {
+            font-size: 0.875rem;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-secondary {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: transparent;
+            color: rgb(8, 8, 8);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 3rem;
+            flex: 1;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .form-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: rgb(0, 0, 0);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        .form-description {
+            font-size: 1.125rem;
+            color: rgba(7, 7, 7, 0.8);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 4px;
+            border-radius: 2px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: var(--accent-light);
+            height: 100%;
+            width: 0%;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+        }
+
+        .card-header {
+            padding: 2rem 2rem 1rem;
+            border-bottom: 1px solid var(--border-light);
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        }
+
+        .card-header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .basic-icon { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .income-icon { background: linear-gradient(135deg, #10b981, #047857); }
+        .business-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .rent-icon { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .deductions-icon { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .loans-icon { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+
+        .card-title-section {
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .card-description {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-grid.two-col {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-label.required::after {
+            content: ' *';
+            color: var(--error);
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: all 0.2s ease;
+            appearance: none;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-input:hover, .form-select:hover {
+            border-color: var(--text-light);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.75rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 3rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .checkbox-group:hover {
+            background: var(--bg-secondary);
+            border-color: var(--border);
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+
+        .checkbox-label {
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        .conditional-section {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-tertiary);
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+
+        .conditional-section.show {
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .submit-section {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 16px;
+            font-size: 1.125rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .output-section {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+
+        .output-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            padding: 1.5rem 2rem;
+            color: white;
+        }
+
+        .output-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .output-subtitle {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        .output-body {
+            padding: 2rem;
+        }
+
+        .json-output {
+            width: 100%;
+            height: 400px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            resize: vertical;
+        }
+
+        .json-output:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .output-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-outline {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--accent);
+            background: transparent;
+            color: var(--accent);
+            border-radius: 12px;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .error-state {
+            border-color: var(--error) !important;
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1) !important;
+        }
+
+        .success-state {
+            border-color: var(--success) !important;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1) !important;
+        }
+
+        @media (max-width: 1024px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-grid.two-col {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 0 1rem;
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .main-content {
+                padding: 0 1rem 2rem;
+            }
+            
+            .form-title {
+                font-size: 1.875rem;
+            }
+            
+            .cards-grid {
+                gap: 1.5rem;
+            }
+            
+            .card-header, .card-body {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Custom scrollbar */
+        .json-output::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .json-output::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 4px;
+        }
+
+        .json-output::-webkit-scrollbar-thumb {
+            background: var(--text-light);
+            border-radius: 4px;
+        }
+
+        .json-output::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">T</div>
+                    <div class="brand-text">
+                        <div class="brand-title">TaxSaver Pro</div>
+                        <div class="brand-subtitle">Advanced Tax Planning Interface</div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary" onclick="resetForm()">Reset Form</button>
+                    <button class="btn-secondary" onclick="saveProgress()">Save Progress</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="form-header">
+                <h1 class="form-title">Tax Information Collection</h1>
+                <p class="form-description">Provide your financial details to generate comprehensive tax calculations and recommendations tailored to your specific situation.</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div class="cards-grid">
+                <!-- Basic Information Card -->
+                <div class="card" data-card="basic">
+                    <div class="card-header">
+                        <div class="card-header-content">
+                            <div class="card-icon basic-icon">👤</div>
+                            <div class="card-title-section">
+                                <h3 class="card-title">Personal Information</h3>
+                                <p class="card-description">Basic details and employment status</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-grid two-col">
+                            <div class="form-group">
+                                <label class="form-label required" for="name">Full Name</label>
+                                <input type="text" class="form-input" id="name" name="name" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required" for="age">Age</label>
+                                <input type="number" class="form-input" id="age" name="age" min="18" max="100" placeholder="25" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="pan">PAN Number</label>
+                                <input type="text" class="form-input" id="pan" name="pan" placeholder="ABCDE1234F" maxlength="10" style="text-transform: uppercase;">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required" for="employment_type">Employment Type</label>
+                                <select class="form-select" id="employment_type" name="employment_type" required>
+                                    <option value="">Select employment type</option>
+                                    <option value="salaried">Salaried Employee</option>
+                                    <option value="self_employed">Self Employed</option>
+                                    <option value="freelancer">Freelancer</option>
+                                    <option value="pensioner">Pensioner</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label class="form-label required" for="resident_type">Residency Status</label>
+                                <select class="form-select" id="resident_type" name="resident_type" required>
+                                    <option value="">Select residency status</option>
+                                    <option value="resident">Indian Resident</option>
+                                    <option value="non_resident">Non-Resident Indian</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Income Details Card -->
+                <div class="card" data-card="income">
+                    <div class="card-header">
+                        <div class="card-header-content">
+                            <div class="card-icon income-icon">💰</div>
+                            <div class="card-title-section">
+                                <h3 class="card-title">Income Components</h3>
+                                <p class="card-description">Salary breakdown and additional income</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-grid two-col">
+                            <div class="form-group">
+                                <label class="form-label required" for="basic_salary">Basic Salary</label>
+                                <input type="number" class="form-input" id="basic_salary" name="basic_salary" min="0" step="0.01" placeholder="₹ 500,000" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required" for="hra_received">HRA Received</label>
+                                <input type="number" class="form-input" id="hra_received" name="hra_received" min="0" step="0.01" placeholder="₹ 100,000" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required" for="special_allowance">Special Allowance</label>
+                                <input type="number" class="form-input" id="special_allowance" name="special_allowance" min="0" step="0.01" placeholder="₹ 50,000" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="bonus">Annual Bonus</label>
+                                <input type="number" class="form-input" id="bonus" name="bonus" min="0" step="0.01" value="0" placeholder="₹ 25,000">
+                            </div>
+                            <div class="form-group full-width">
+                                <label class="form-label" for="other_income">Other Income</label>
+                                <input type="number" class="form-input" id="other_income" name="other_income" min="0" step="0.01" value="0" placeholder="Interest, rental income, dividends, etc.">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Income Card -->
+                <div class="card" data-card="business">
+                    <div class="card-header">
+                        <div class="card-header-content">
+                            <div class="card-icon business-icon">🏢</div>
+                            <div class="card-title-section">
+                                <h3 class="card-title">Business Income</h3>
+                                <p class="card-description">Revenue from business activities</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="checkbox-group" onclick="toggleCheckbox('has_business_income')">
+                            <input type="checkbox" id="has_business_income" name="has_business_income">
+                            <label class="checkbox-label" for="has_business_income">I have business or professional income</label>
+                        </div>
+                        
+                        <div id="business_details" class="conditional-section hidden">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label" for="business_type">Business Type</label>
+                                    <select class="form-select" id="business_type" name="business_type">
+                                        <option value="">Select business category</option>
+                                        <option value="freelancer">Freelancing Services</option>
+                                        <option value="consultant">Consulting Business</option>
+                                        <option value="trader">Trading Activities</option>
+                                        <option value="ecommerce">E-commerce Business</option>
+                                        <option value="retail">Retail Business</option>
+                                        <option value="service">Service Provider</option>
+                                        <option value="manufacturing">Manufacturing</option>
+                                        <option value="other">Other Business</option>
+                                    </select>
+                                </div>
+                                <div class="form-grid two-col">
+                                    <div class="form-group">
+                                        <label class="form-label" for="annual_gross_receipts">Annual Gross Receipts</label>
+                                        <input type="number" class="form-input" id="annual_gross_receipts" name="annual_gross_receipts" min="0" step="0.01" value="0" placeholder="₹ 1,000,000">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="annual_expenses">Annual Business Expenses</label>
+                                        <input type="number" class="form-input" id="annual_expenses" name="annual_expenses" min="0" step="0.01" value="0" placeholder="₹ 200,000">
+                                    </div>
+                                </div>
+                                <div class="checkbox-group" onclick="toggleCheckbox('under_presumptive_taxation')">
+                                    <input type="checkbox" id="under_presumptive_taxation" name="under_presumptive_taxation">
+                                    <label class="checkbox-label" for="under_presumptive_taxation">Operating under Presumptive Taxation Scheme</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Housing & Rent Card -->
+                <div class="card" data-card="rent">
+                    <div class="card-header">
+                        <div class="card-header-content">
+                            <div class="card-icon rent-icon">🏠</div>
+                            <div class="card-title-section">
+                                <h3 class="card-title">Housing Details</h3>
+                                <p class="card-description">Rental information and HRA calculations</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="checkbox-group" onclick="toggleCheckbox('lives_in_rented_house')">
+                            <input type="checkbox" id="lives_in_rented_house" name="lives_in_rented_house">
+                            <label class="checkbox-label" for="lives_in_rented_house">I live in a rented accommodation</label>
+                        </div>
+                        
+                        <div class="form-grid two-col" style="margin-top: 1.5rem;">
+                            <div class="form-group">
+                                <label class="form-label required" for="monthly_rent_paid">Monthly Rent</label>
+                                <input type="number" class="form-input" id="monthly_rent_paid" name="monthly_rent_paid" min="0" step="0.01" placeholder="₹ 25,000" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required" for="city_type">City Classification</label>
+                                <select class="form-select" id="city_type" name="city_type" required>
+                                    <option value="">Select city type</option>
+                                    <option value="metro">Metro City (Mumbai, Delhi, Chennai, Kolkata)</option>
+                                    <option value="non-metro">Non-Metro City</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tax Deductions Card -->
+                <div class="card" data-card="deductions">
+                    <div class="card-header">
+                        <div class="card-header-content">
+                            <div class="card-icon deductions-icon">📊</div>
+                            <div class="card-title-section">
+                                <h3 class="card-title">Tax Deductions</h3>
+                                <p class="card-description">Investment and expense deductions</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-grid two-col">
+                            <div class="form-group">
+                                <label class="form-label" for="investments_under_80C">Section 80C Investments</label>
+                                <input type="number" class="form-input" id="investments_under_80C" name="investments_under_80C" min="0" step="0.01" value="0" placeholder="PPF, ELSS, Life Insurance (Max ₹1.5L)">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="health_insurance_self_family">Health Insurance (Self & Family)</label>
+                                <input type="number" class="form-input" id="health_insurance_self_family" name="health_insurance_self_family" min="0" step="0.01" value="0" placeholder="₹ 25,000">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="health_insurance_parents">Health Insurance (Parents)</label>
+                                <input type="number" class="form-input" id="health_insurance_parents" name="health_insurance_parents" min="0" step="0.01" value="0" placeholder="₹ 50,000">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="education_loan_interest">Education Loan Interest</label>
+                                <input type="number" class="form-input" id="education_loan_interest" name="education_loan_interest" min="0" step="0.01" value="0" placeholder="₹ 40,000">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="donations">Donations (80G)</label>
+                                <input type="number" class="form-input" id="donations" name="donations" min="0" step="0.01" value="0" placeholder="₹ 10,000">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="nps_additional_contribution">NPS Additional Contribution</label>
+                                <input type="number" class="form-input" id="nps_additional_contribution" name="nps_additional_contribution" min="0" step="0.01" value="0" placeholder="₹ 50,000 (80CCD1B)">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="home_loan_interest_deduction">Home Loan Interest (24B)</label>
+                                <input type="number" class="form-input" id="home_loan_interest_deduction" name="home_loan_interest_deduction" min="0" step="0.01" value="0" placeholder="₹ 200,000">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="home_loan_principal_deduction">Home Loan Principal (80C)</label>
+                                <input type="number" class="form-input" id="home_loan_principal_deduction" name="home_loan_principal_deduction" min="0" step="0.01" value="0" placeholder="₹ 150,000">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loans & Tax Regime Card -->
+                <div class="card" data-card="loans">
+                    <div class="card-header">
+                        <div class="card-header-content">
+                            <div class="card-icon loans-icon">🏦</div>
+                            <div class="card-title-section">
+                                <h3 class="card-title">Loans & Tax Regime</h3>
+                                <p class="card-description">Loan details and regime preference</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="checkbox-group" onclick="toggleCheckbox('has_home_loan')">
+                            <input type="checkbox" id="has_home_loan" name="has_home_loan">
+                            <label class="checkbox-label" for="has_home_loan">I have a home loan</label>
+                        </div>
+                        
+                        <div id="home_loan_details" class="conditional-section hidden">
+                            <div class="form-grid two-col">
+                                <div class="form-group">
+                                    <label class="form-label" for="home_loan_interest">Annual Interest Paid</label>
+                                    <input type="number" class="form-input" id="home_loan_interest" name="home_loan_interest" min="0" step="0.01" value="0" placeholder="₹ 250,000">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="home_loan_principal">Annual Principal Paid</label>
+                                    <input type="number" class="form-input" id="home_loan_principal" name="home_loan_principal" min="0" step="0.01" value="0" placeholder="₹ 100,000">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="checkbox-group" onclick="toggleCheckbox('has_education_loan')" style="margin-top: 1rem;">
+                            <input type="checkbox" id="has_education_loan" name="has_education_loan">
+                            <label class="checkbox-label" for="has_education_loan">I have an education loan</label>
+                        </div>
+                        
+                        <div id="education_loan_details" class="conditional-section hidden">
+                            <div class="form-group">
+                                <label class="form-label" for="education_loan_interest_loan">Annual Interest Paid</label>
+                                <input type="number" class="form-input" id="education_loan_interest_loan" name="education_loan_interest_loan" min="0" step="0.01" value="0" placeholder="₹ 40,000">
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 2rem;">
+                            <label class="form-label" for="preferred_tax_regime">Preferred Tax Regime</label>
+                            <select class="form-select" id="preferred_tax_regime" name="preferred_tax_regime">
+                                <option value="">Let system recommend (optional)</option>
+                                <option value="old">Old Tax Regime (with deductions)</option>
+                                <option value="new">New Tax Regime (higher exemption limit)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submit-section">
+                <button class="btn-primary" onclick="generateJSON()">
+                    <span>Generate Tax Analysis</span>
+                </button>
+            </div>
+
+            <div id="output" class="output-section hidden">
+                <div class="output-header">
+                    <h3 class="output-title">Generated Tax Input Data</h3>
+                    <p class="output-subtitle">Structured JSON ready for AI processing</p>
+                </div>
+                <div class="output-body">
+                    <textarea class="json-output" id="json-output" readonly placeholder="Your generated JSON will appear here..."></textarea>
+                    <div class="output-actions">
+                        <button class="btn-outline" onclick="copyToClipboard()">
+                            📋 Copy JSON
+                        </button>
+                        <button class="btn-outline" onclick="downloadJSON()">
+                            📥 Download File
+                        </button>
+                        <button class="btn-outline" onclick="validateJSON()">
+                            ✅ Validate Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Global state management
+        const formState = {
+            currentStep: 0,
+            totalSteps: 6,
+            completedSections: new Set()
+        };
+
+        // Initialize form
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            updateProgress();
+        });
+
+        function setupEventListeners() {
+            // Checkbox interactions
+            document.getElementById('has_business_income').addEventListener('change', function() {
+                toggleConditionalSection('business_details', this.checked);
+            });
+
+            document.getElementById('has_home_loan').addEventListener('change', function() {
+                toggleConditionalSection('home_loan_details', this.checked);
+            });
+
+            document.getElementById('has_education_loan').addEventListener('change', function() {
+                toggleConditionalSection('education_loan_details', this.checked);
+            });
+
+            // PAN formatting
+            document.getElementById('pan').addEventListener('input', function() {
+                this.value = this.value.toUpperCase();
+            });
+
+            // Form validation on input
+            const inputs = document.querySelectorAll('.form-input, .form-select');
+            inputs.forEach(input => {
+                input.addEventListener('blur', validateField);
+                input.addEventListener('input', clearValidationState);
+            });
+
+            // Progress tracking
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const inputs = card.querySelectorAll('.form-input[required], .form-select[required]');
+                inputs.forEach(input => {
+                    input.addEventListener('input', updateProgress);
+                });
+            });
+        }
+
+        function toggleCheckbox(checkboxId) {
+            const checkbox = document.getElementById(checkboxId);
+            checkbox.checked = !checkbox.checked;
+            checkbox.dispatchEvent(new Event('change'));
+        }
+
+        function toggleConditionalSection(sectionId, show) {
+            const section = document.getElementById(sectionId);
+            if (show) {
+                section.classList.remove('hidden');
+                section.classList.add('show');
+            } else {
+                section.classList.add('hidden');
+                section.classList.remove('show');
+            }
+        }
+
+        function validateField(event) {
+            const field = event.target;
+            const value = field.value.trim();
+            
+            field.classList.remove('error-state', 'success-state');
+            
+            if (field.hasAttribute('required') && !value) {
+                field.classList.add('error-state');
+                return false;
+            } else if (value) {
+                field.classList.add('success-state');
+                return true;
+            }
+            return true;
+        }
+
+        function clearValidationState(event) {
+            const field = event.target;
+            field.classList.remove('error-state');
+        }
+
+        function updateProgress() {
+            const requiredFields = document.querySelectorAll('.form-input[required], .form-select[required]');
+            const filledFields = Array.from(requiredFields).filter(field => field.value.trim());
+            const progressPercent = (filledFields.length / requiredFields.length) * 100;
+            
+            document.getElementById('progressFill').style.width = `${progressPercent}%`;
+        }
+
+        function generateJSON() {
+            if (!validateForm()) {
+                showNotification('Please fill all required fields', 'error');
+                return;
+            }
+
+            const formData = {
+                basic: {
+                    name: document.getElementById('name').value,
+                    age: parseInt(document.getElementById('age').value) || 0,
+                    pan: document.getElementById('pan').value || null,
+                    employment_type: document.getElementById('employment_type').value,
+                    resident_type: document.getElementById('resident_type').value
+                },
+                income: {
+                    basic_salary: parseFloat(document.getElementById('basic_salary').value) || 0,
+                    hra_received: parseFloat(document.getElementById('hra_received').value) || 0,
+                    special_allowance: parseFloat(document.getElementById('special_allowance').value) || 0,
+                    bonus: parseFloat(document.getElementById('bonus').value) || 0,
+                    other_income: parseFloat(document.getElementById('other_income').value) || 0,
+                    business_income: document.getElementById('has_business_income').checked ? {
+                        has_business_income: true,
+                        business_type: document.getElementById('business_type').value || null,
+                        annual_gross_receipts: parseFloat(document.getElementById('annual_gross_receipts').value) || 0,
+                        annual_expenses: parseFloat(document.getElementById('annual_expenses').value) || 0,
+                        under_presumptive_taxation: document.getElementById('under_presumptive_taxation').checked
+                    } : {
+                        has_business_income: false,
+                        business_type: null,
+                        annual_gross_receipts: 0,
+                        annual_expenses: 0,
+                        under_presumptive_taxation: false
+                    }
+                },
+                rent: {
+                    monthly_rent_paid: parseFloat(document.getElementById('monthly_rent_paid').value) || 0,
+                    city_type: document.getElementById('city_type').value,
+                    lives_in_rented_house: document.getElementById('lives_in_rented_house').checked
+                },
+                deductions: {
+                    investments_under_80C: parseFloat(document.getElementById('investments_under_80C').value) || 0,
+                    health_insurance_self_family: parseFloat(document.getElementById('health_insurance_self_family').value) || 0,
+                    health_insurance_parents: parseFloat(document.getElementById('health_insurance_parents').value) || 0,
+                    education_loan_interest: parseFloat(document.getElementById('education_loan_interest').value) || 0,
+                    donations: parseFloat(document.getElementById('donations').value) || 0,
+                    nps_additional_contribution: parseFloat(document.getElementById('nps_additional_contribution').value) || 0,
+                    home_loan_interest: parseFloat(document.getElementById('home_loan_interest_deduction').value) || 0,
+                    home_loan_principal: parseFloat(document.getElementById('home_loan_principal_deduction').value) || 0
+                },
+                loans: {
+                    has_home_loan: document.getElementById('has_home_loan').checked,
+                    home_loan_interest: parseFloat(document.getElementById('home_loan_interest').value) || 0,
+                    home_loan_principal: parseFloat(document.getElementById('home_loan_principal').value) || 0,
+                    has_education_loan: document.getElementById('has_education_loan').checked,
+                    education_loan_interest: parseFloat(document.getElementById('education_loan_interest_loan').value) || 0
+                },
+                preferred_tax_regime: document.getElementById('preferred_tax_regime').value || null
+            };
+
+            document.getElementById('json-output').value = JSON.stringify(formData, null, 2);
+            document.getElementById('output').classList.remove('hidden');
+            document.getElementById('output').scrollIntoView({ behavior: 'smooth' });
+            
+            showNotification('Tax analysis data generated successfully!', 'success');
+        }
+
+        function validateForm() {
+            const requiredFields = document.querySelectorAll('.form-input[required], .form-select[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.classList.add('error-state');
+                    isValid = false;
+                } else {
+                    field.classList.remove('error-state');
+                    field.classList.add('success-state');
+                }
+            });
+            
+            return isValid;
+        }
+
+        function copyToClipboard() {
+            const textarea = document.getElementById('json-output');
+            textarea.select();
+            document.execCommand('copy');
+            showNotification('JSON data copied to clipboard!', 'success');
+        }
+
+        function downloadJSON() {
+            const jsonData = document.getElementById('json-output').value;
+            const blob = new Blob([jsonData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'tax-saver-input.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showNotification('JSON file downloaded!', 'success');
+        }
+
+        function validateJSON() {
+            const jsonData = document.getElementById('json-output').value;
+            try {
+                JSON.parse(jsonData);
+                showNotification('JSON structure is valid!', 'success');
+            } catch (error) {
+                showNotification('Invalid JSON structure!', 'error');
+            }
+        }
+
+        function resetForm() {
+            if (confirm('Are you sure you want to reset all form data?')) {
+                document.querySelectorAll('.form-input, .form-select').forEach(field => {
+                    if (field.type === 'checkbox') {
+                        field.checked = false;
+                    } else {
+                        field.value = field.hasAttribute('value') ? field.getAttribute('value') : '';
+                    }
+                    field.classList.remove('error-state', 'success-state');
+                });
+                
+                document.querySelectorAll('.conditional-section').forEach(section => {
+                    section.classList.add('hidden');
+                });
+                
+                document.getElementById('output').classList.add('hidden');
+                updateProgress();
+                showNotification('Form reset successfully!', 'success');
+            }
+        }
+
+        function saveProgress() {
+            const formData = new FormData(document.querySelector('form') || document.body);
+            const data = Object.fromEntries(formData.entries());
+            localStorage.setItem('taxSaverProgress', JSON.stringify(data));
+            showNotification('Progress saved locally!', 'success');
+        }
+
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div style="
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${type === 'success' ? 'var(--success)' : type === 'error' ? 'var(--error)' : 'var(--accent)'};
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 12px;
+                    box-shadow: var(--shadow-lg);
+                    z-index: 1000;
+                    font-weight: 500;
+                    animation: slideIn 0.3s ease;
+                ">
+                    ${message}
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Add CSS animation for notifications
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
